@@ -9,7 +9,7 @@ from flask import request, render_template
 from EmotionDetection.emotion_detection import emotion_detector
 
 #Initiate the flask app
-app = Flask("\emotionDetector")
+app = Flask("/emotionDetector")
 
 @app.route("/emotionDetector")
 def em_detector():
@@ -26,12 +26,15 @@ def em_detector():
     joy_score = response['joy']
     sadness_score = response['sadness']
     dominant_emotion = response['dominant_emotion']
-    
+
     #Check if label is None, indicating err or invalid response
     if anger_score is None:
         return "Invalid input ! Try again."
     #Return a formatted string with the outputs
-    return f"For the given statement, the system response is: 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score}, and 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion}."
+    return ("For the given statement, the system response is: 'anger': " +
+        f"{anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, " +
+        f"'joy': {joy_score}, and 'sadness': {sadness_score}. " +
+        f"The dominant emotion is {dominant_emotion}.")
 
 @app.route("/")
 def render_index_page():
